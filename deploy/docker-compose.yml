@@ -1,0 +1,24 @@
+# pve-mcp: JARVIS's Proxmox integration. The .env next to this file holds MCP_TOKEN and the Proxmox token.
+services:
+  pve-mcp:
+    image: ghcr.io/thomasxd24/pve-mcp:latest
+    container_name: pve-mcp
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    volumes:
+      - pve-mcp-data:/data # the SSH key (made on first start) and pinned node host keys
+    networks: [jarvis]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    read_only: true
+    tmpfs: [/tmp]
+
+networks:
+  # JARVIS reaches it at http://pve-mcp:8080/mcp over JARVIS's own compose network; no port is published.
+  jarvis:
+    name: jarvis_default
+    external: true
+
+volumes:
+  pve-mcp-data:
