@@ -16,7 +16,7 @@ env:
 
 jobs:
   check:
-    runs-on: [self-hosted, lxc]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,7 +28,7 @@ jobs:
 
   image:
     needs: check
-    runs-on: [self-hosted, lxc]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       # Own Docker login per job: the self-hosted runners share one user, and another
